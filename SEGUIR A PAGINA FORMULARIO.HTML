@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulário com Links e Checkboxes</title>
+    <script>
+        var linksVisited = { link1: false, link2: false, link3: false };
+
+        function setLinkVisited(link) {
+            // Abre o link em uma nova janela
+            var newWindow;
+            switch(link) {
+                case 'link1':
+                    newWindow = window.open("https://www.instagram.com/novaera_centroautomotivo", '_blank');
+                    break;
+                case 'link2':
+                    newWindow = window.open("https://www.instagram.com/mecanico_marceloramos", '_blank');
+                    break;
+                case 'link3':
+                    newWindow = window.open("https://www.instagram.com/devocparts.br", '_blank');
+                    break;
+            }
+
+            // Aguarda um curto período de tempo antes de marcar como visitado
+            setTimeout(function() {
+                linksVisited[link] = true;
+                document.getElementById(link).checked = true;
+                if (newWindow) newWindow.close(); // Fecha a janela aberta após marcar
+            }, 2000); // Ajuste o tempo conforme necessário
+        }
+
+        function validateForm() {
+            if (linksVisited.link1 && linksVisited.link2 && linksVisited.link3) {
+                // Redireciona para o novo link ao enviar o formulário
+                window.location.href = "https://api.whatsapp.com/send?phone=5544991475694&text=Ol%C3%A1,%20j%C3%A1%20estou%20seguindo%20as%20p%C3%A1ginas%20e%20estou%20concorrendo%20ao%20sorteio.";
+                return false; // Previne o envio do formulário padrão
+            } else {
+                alert("Por favor, visite todos os links e marque as caixas antes de continuar.");
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <form id="myForm" onsubmit="return validateForm()">
+        <p>Visite os seguintes links e marque as caixas de seleção:</p>
+        <a href="javascript:void(0);" onclick="setLinkVisited('link1')">Link 1</a>
+        <input type="checkbox" id="link1" name="link1" disabled><br>
+        <a href="javascript:void(0);" onclick="setLinkVisited('link2')">Link 2</a>
+        <input type="checkbox" id="link2" name="link2" disabled><br>
+        <a href="javascript:void(0);" onclick="setLinkVisited('link3')">Link 3</a>
+        <input type="checkbox" id="link3" name="link3" disabled><br>
+        <input type="submit" value="Finalizar">
+    </form>
+</body>
+</html>
